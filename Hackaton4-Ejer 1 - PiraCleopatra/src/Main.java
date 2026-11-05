@@ -1,6 +1,5 @@
 import java.io.*;
 import java.util.StringTokenizer;
-
 public class Main {
     static int distancia(int x, int y) {
         if ((x < 0 && y > 0) || (x > 0 && y < 0)) {
