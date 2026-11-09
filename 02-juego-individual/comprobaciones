@@ -1,0 +1,5 @@
+1: Al entrar en el objeto sube en uno el contador de sellos y en el origen se escribe 'L'
+2: Al salir y entrar en la casilla no sube mas el contador
+3: El jugador no puede entrar en la estacion, se informa de que necesita 3 sellos y sigue la partida
+4: Gana directamente, sin pedir otro movimiento
+5: Al perder todas las vidas se informa de que ha muerto y se acaba la partida
