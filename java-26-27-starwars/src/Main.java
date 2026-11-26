@@ -1,4 +1,3 @@
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
@@ -13,6 +12,7 @@ public class Main {
     static boolean activo = true;
     static int filaAl;
     static int colAL;
+    static boolean puedeSaltar;
     static int filaY;
     static int colY;
     static int filaD;
@@ -21,27 +21,57 @@ public class Main {
     static int colAY;
     static int filaAD;
     static int colAD;
-    static char mov;
+    static String mov;
+    static int cooldownSaltos;
     static boolean ganar = false;
     static char[][] tableroActivo = new char[maxF][maxC];
     static char[][] tableroYoda = new char[maxF][maxC];
     static char[][] tableroVader = new char[maxF][maxC];
+
     static void movimientoTablero(char[][] tableroActivo) {
         if (activo) {
             filaAY = filaY;
             colAY = colY;
             switch (mov) {
-                case 'W':
+                case "W":
                     filaY--;
                     break;
-                case 'A':
+                case "A":
                     colY--;
                     break;
-                case 'S':
+                case "S":
                     filaY++;
                     break;
-                case 'D':
+                case "D":
                     colY++;
+                    break;
+                case "WW":
+                    if (puedeSaltar) {
+                        filaY -= 2;
+                    } else {
+                        System.out.println("No puedes saltar");
+                    }
+                    break;
+                case "AA":
+                    if (puedeSaltar) {
+                        colY -= 2;
+                    } else {
+                        System.out.println("No puedes saltar");
+                    }
+                    break;
+                case "DD":
+                    if (puedeSaltar) {
+                        colY += 2;
+                    } else {
+                        System.out.println("No puedes saltar");
+                    }
+                    break;
+                case "SS":
+                    if (puedeSaltar) {
+                        filaY += 2;
+                    } else {
+                        System.out.println("No puedes saltar");
+                    }
                     break;
             }
             if (filaY < 0 || filaY > 9 || colY < 0 || colY > 9) {
@@ -78,49 +108,77 @@ public class Main {
             filaAD = filaD;
             colAD = colD;
             switch (mov) {
-                case 'W':
-                    filaD--;
+                case "W":
+                    filaY--;
                     break;
-                case 'A':
-                    colD--;
+                case "A":
+                    colY--;
                     break;
-                case 'S':
-                    filaD++;
+                case "S":
+                    filaY++;
                     break;
-                case 'D':
-                    colD++;
+                case "D":
+                    colY++;
+                    break;
+                case "WW":
+                    if (puedeSaltar) {
+                        filaY -= 2;
+                    } else {
+                        System.out.println("No puedes saltar");
+                    }
+                    break;
+                case "AA":
+                    if (puedeSaltar) {
+                        colY -= 2;
+                    } else {
+                        System.out.println("No puedes saltar");
+                    }
+                    break;
+                case "DD":
+                    if (puedeSaltar) {
+                        colY += 2;
+                    } else {
+                        System.out.println("No puedes saltar");
+                    }
+                    break;
+                case "SS":
+                    if (puedeSaltar) {
+                        filaY += 2;
+                    } else {
+                        System.out.println("No puedes saltar");
+                    }
                     break;
             }
-            if (filaD < 0 || filaD > 9 || colD < 0 || colD > 9) {
-                System.out.println("EHHHHHHHH!!!!!!!!!!!!");
-                System.out.println("LÍMITE DE TABLERO!!!!!!");
+        }
+        if (filaD < 0 || filaD > 9 || colD < 0 || colD > 9) {
+            System.out.println("EHHHHHHHH!!!!!!!!!!!!");
+            System.out.println("LÍMITE DE TABLERO!!!!!!");
+            filaD = filaAD;
+            colD = colAD;
+        } else {
+            if (tableroActivo[filaD][colD] == letras[2]) {
+                System.out.println("NO PUEDES PASAR!!!!!");
                 filaD = filaAD;
                 colD = colAD;
-            } else {
-                if (tableroActivo[filaD][colD] == letras[2]) {
-                    System.out.println("NO PUEDES PASAR!!!!!");
-                    filaD = filaAD;
-                    colD = colAD;
-                } else if (tableroActivo[filaD][colD] == letras[3]) {
-                    System.out.println("Has recuperado una vida");
-                    tableroActivo[filaD][colD] = letras[4];
-                    tableroActivo[filaAD][colAD] = libre;
-                    vidas++;
-                } else if (tableroActivo[filaD][colD] == letras[5]) {
-                    System.out.println("Has perdido una vida");
-                    tableroActivo[filaD][colD] = letras[4];
-                    tableroActivo[filaAD][colAD] = libre;
-                    vidas--;
-                } else if (tableroActivo[filaD][colD] == libre) {
-                    tableroActivo[filaD][colD] = letras[4];
-                    tableroActivo[filaAD][colAD] = libre;
-                } else if (tableroActivo[filaY][colY] == fin) {
+            } else if (tableroActivo[filaD][colD] == letras[3]) {
+                System.out.println("Has recuperado una vida");
+                tableroActivo[filaD][colD] = letras[4];
+                tableroActivo[filaAD][colAD] = libre;
+                vidas++;
+            } else if (tableroActivo[filaD][colD] == letras[5]) {
+                System.out.println("Has perdido una vida");
+                tableroActivo[filaD][colD] = letras[4];
+                tableroActivo[filaAD][colAD] = libre;
+                vidas--;
+            } else if (tableroActivo[filaD][colD] == libre) {
+                tableroActivo[filaD][colD] = letras[4];
+                tableroActivo[filaAD][colAD] = libre;
+            } else if (tableroActivo[filaY][colY] == fin) {
 
-                    System.out.println("Has ganado");
-                    tableroActivo[filaD][colD] = letras[4];
-                    tableroActivo[filaAD][colAD] = libre;
-                    ganar = true;
-                }
+                System.out.println("Has ganado");
+                tableroActivo[filaD][colD] = letras[4];
+                tableroActivo[filaAD][colAD] = libre;
+                ganar = true;
             }
         }
     }
@@ -171,9 +229,7 @@ public class Main {
         }
     }
     public static void main(String[] args) {
-        Random dice = new Random();
         Scanner sc = new Scanner(System.in);
-        int pos = 0;
         rellenarTablero(tableroYoda);
         colocarTablero(tableroYoda);
         activo = false;
@@ -186,7 +242,15 @@ public class Main {
         imprimirTablero(tableroActivo);
         do {
             System.out.println("Dime una letra de movimiento !!");
-            mov = sc.next().toUpperCase().charAt(0);
+            mov = sc.next().toUpperCase();
+            String[] saltos = mov.split("");
+            if (saltos.length == 2 && cooldownSaltos == 0) {
+                puedeSaltar = true;
+                cooldownSaltos = 5;
+            } else if (cooldownSaltos != 0) {
+                puedeSaltar = false;
+                cooldownSaltos--;
+            }
             movimientoTablero(tableroActivo);
             imprimirTablero(tableroActivo);
             System.out.println("Vidas: " + vidas);
@@ -199,7 +263,7 @@ public class Main {
             imprimirTablero(tableroActivo);
             do {
                 System.out.println("Dime una letra de movimiento !!");
-                mov = sc.next().toUpperCase().charAt(0);
+                mov = sc.next().toUpperCase();
                 movimientoTablero(tableroActivo);
                 imprimirTablero(tableroActivo);
                 System.out.println("Vidas: " + vidas);
